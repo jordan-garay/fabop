@@ -2,11 +2,13 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
+    sonata.user.admin.user.class: UserBundle\Admin\UserAdmin
 
 framework:
     #esi: ~
@@ -58,6 +60,10 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+#        entity_managers: 
+#            default:
+#                mappings: 
+#                    UserBundle : ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -79,6 +85,8 @@ sonata_block:
 sonata_user:
     security_acl: true
     manager_type: orm # can be orm or mongodb
+    class: 
+        user : UserBundle\Entity\User
 
 sonata_block:
     blocks:
@@ -90,7 +98,7 @@ sonata_block:
 fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
+    user_class:     UserBundle\Entity\User
 
 
     group:

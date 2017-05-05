@@ -21,26 +21,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            pattern:             .*
-            context:             user
-            form_login:
-                provider:       fos_userbundle
-                login_path:     /admin/login
-                use_forward:    false
-                check_path:     /admin/login_check
-                failure_path:   null
-            logout:
-                path:           /admin/logout
-                target:         /admin/login
-            anonymous:          true
-            # activate different ways to authenticate
-
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
         admin:
             pattern:            /admin(.*)
             context:            user
