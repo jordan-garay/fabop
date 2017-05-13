@@ -1,0 +1,8 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block javascripts_footer %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/location/js/geocoder.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpIIyjdEZJr1d6U6IxiatzehYjmWQxGKk&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
+    <script type="text/javascript" src="{{ asset('bundles/institution/js/edit.js') }}"></script>
+{% endblock javascripts_footer %}

@@ -29,6 +29,14 @@ class User extends BaseUser
      * @ORM\Column(name="newsletter", type="boolean")
      */
     protected $newsletter;
+    
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="LocationBundle\Entity\Location", cascade={"all"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $location;
 
 
     /**
@@ -62,5 +70,29 @@ class User extends BaseUser
     public function getNewsletter()
     {
         return $this->newsletter;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \LocationBundle\Entity\Location $location
+     *
+     * @return User
+     */
+    public function setLocation(\LocationBundle\Entity\Location $location = null)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \LocationBundle\Entity\Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

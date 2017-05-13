@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new UserBundle\UserBundle(),
+            new LocationBundle\LocationBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

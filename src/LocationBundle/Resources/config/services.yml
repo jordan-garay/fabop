@@ -1,0 +1,15 @@
+parameters:
+    twig.extension.fop_location.class: LocationBundle\Twig\Extension\LocationExtension
+
+services:
+
+    form.type.fop_location:
+        class: LocationBundle\Form\Type\LocationType
+        tags:
+            - { name: form.type, alias: fop_location }
+
+    twig.extension.fop_location:
+        class: "%twig.extension.fop_location.class%"
+
+        tags:
+            - { name: twig.extension }

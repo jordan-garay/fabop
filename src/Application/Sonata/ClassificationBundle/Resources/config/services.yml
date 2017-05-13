@@ -1,0 +1,6 @@
+services:
+    application_sonata_classification.admin.category:
+        class: Application\Sonata\ClassificationBundle\Admin\CategoryAdmin
+        arguments: [~, Application\Sonata\ClassificationBundle\Entity\Category, ApplicationSonataClassificationBundle:CategoryAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Category }
