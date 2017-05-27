@@ -1,9 +1,13 @@
 imports:
+    - { resource: sonata_classification.yml }
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@LocationBundle/Resources/config/services.yml" }
+    - { resource: "@ClassificationBundle/Resources/config/services.yml" }
+    - { resource: "@InstitutionBundle/Resources/config/services.yml" }
+    - { resource: "@ExportBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -89,6 +93,26 @@ sonata_user:
     class: 
         user : UserBundle\Entity\User
         
+sonata_classification:
+    class:
+        collection:     Application\Sonata\ClassificationBundle\Entity\Collection
+        tag:            Application\Sonata\ClassificationBundle\Entity\Tag
+        category:       Application\Sonata\ClassificationBundle\Entity\Category
+        
+    admin:
+        tag:
+            class:        Sonata\ClassificationBundle\Admin\TagAdmin
+            controller:   SonataAdminBundle:CRUD
+            translation:  SonataClassificationBundle
+        category:
+            class:        Sonata\ClassificationBundle\Admin\CategoryAdmin
+            controller:   SonataAdminBundle:CRUD
+            translation:  SonataClassificationBundle
+        collection:
+            class:        Sonata\ClassificationBundle\Admin\CollectionAdmin
+            controller:   SonataAdminBundle:CRUD
+            translation:  SonataClassificationBundle
+        
 sonata_admin:
     templates:
         layout: ::sonata/standard_layout.html.twig
@@ -100,7 +124,25 @@ sonata_admin:
                 label: Carnet d'adresse
                 items:
                     - user.admin.user
+                icon: '<i class="fa fa-users"></i>'
+                
+            Institution:
+                on_top: true
+                label: Institutions
+                items:
+                    - institution.admin.institution
                 icon: '<i class="fa fa-university"></i>'
+                
+            Category:
+                on_top : true
+                items:
+                    - sonata.classification.admin.category
+                    
+            Export:
+                on_top : true
+                label: Modèles d'export
+                items:
+                    - export.admin.export
 
 
 fos_user:

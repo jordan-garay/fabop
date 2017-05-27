@@ -1,0 +1,9 @@
+services:
+#    classification.example:
+#        class: ClassificationBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    classification.admin.category:
+        class: ClassificationBundle\Admin\CategoryAdmin
+        arguments: [~, ClassificationBundle\Entity\Category, ClassificationBundle:CategoryAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Category }

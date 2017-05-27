@@ -3,7 +3,6 @@
 namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\EntityManager;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 /**
@@ -37,6 +36,24 @@ class User extends BaseUser
      * @ORM\JoinColumn(nullable=true)
      */
     private $location;
+    
+    /**
+     * @var Categories
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Sonata\ClassificationBundle\Entity\Category", mappedBy="users")
+     */
+    private $categories;
+    
+    /**
+     * @var Institution
+     *
+     * @ORM\ManyToMany(targetEntity="InstitutionBundle\Entity\Institution", mappedBy="utilisateurs")
+     * @ORM\JoinTable(name="institutions_users",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="institutions_id", referencedColumnName="id",nullable=true)})
+     */
+
+    private $institutions;
 
 
     /**
@@ -94,5 +111,75 @@ class User extends BaseUser
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \ClassificationBundle\Entity\Category $category
+     *
+     * @return User
+     */
+    public function addCategory(\ClassificationBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \ClassificationBundle\Entity\Category $category
+     */
+    public function removeCategory(\ClassificationBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add institution
+     *
+     * @param \InstitutionBundle\Entity\Institution $institution
+     *
+     * @return User
+     */
+    public function addInstitution(\InstitutionBundle\Entity\Institution $institution)
+    {
+        $this->institutions[] = $institution;
+        $institution->addUtilisateur($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove institution
+     *
+     * @param \InstitutionBundle\Entity\Institution $institution
+     */
+    public function removeInstitution(\InstitutionBundle\Entity\Institution $institution)
+    {
+        $this->institutions->removeElement($institution);
+        $institution->removeUtilisateur($this);
+    }
+
+    /**
+     * Get institutions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInstitutions()
+    {
+        return $this->institutions;
     }
 }
