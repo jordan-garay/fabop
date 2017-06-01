@@ -92,6 +92,7 @@ sonata_user:
     manager_type: orm # can be orm or mongodb
     class: 
         user : UserBundle\Entity\User
+    
         
 sonata_classification:
     class:
@@ -149,6 +150,11 @@ fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
     user_class:     UserBundle\Entity\User
+    registration:
+        confirmation:
+            enabled: true
+        form:
+            type: UserBundle\Form\RegistrationType
 
 
     group:
@@ -157,3 +163,8 @@ fos_user:
 
     service:
         user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
+
+sendin_blue_api:
+    api_key: 9ROQwEhyfb35MInx
+    # Our library supports a timeout value, which is an optional parameter, default is 30,000 MS ( 30 secs )
+    timeout: 5000

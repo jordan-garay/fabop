@@ -42,6 +42,7 @@ class AppKernel extends Kernel
             new ClassificationBundle\ClassificationBundle(),
             new InstitutionBundle\InstitutionBundle(),
             new ExportBundle\ExportBundle(),
+            new SendinBlue\SendinBlueApiBundle\SendinBlueApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

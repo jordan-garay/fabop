@@ -1,3 +1,7 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
 export:
     resource: "@ExportBundle/Controller/"
     type:     annotation
@@ -16,11 +20,7 @@ classification:
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation
-    prefix:   /
-
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+    prefix:   
 
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"

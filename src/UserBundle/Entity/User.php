@@ -4,15 +4,31 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
+use SendinBlue\SendinBlueApiBundle\Wrapper\Mailin;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\AttributeOverrides({
+ *      @ORM\AttributeOverride(name="emailCanonical",
+ *          column=@ORM\Column(
+ *              nullable = true,
+ *              unique   = false
+ *          )
+ *      ),
+ *      @ORM\AttributeOverride(name="email",
+ *          column=@ORM\Column(
+ *              nullable = false,
+ *              unique   = false
+ *          )
+ *      ),
+ * })
  */
-class User extends BaseUser
-{
+class User extends BaseUser {
+
     /**
      * @var int
      *
@@ -28,7 +44,7 @@ class User extends BaseUser
      * @ORM\Column(name="newsletter", type="boolean")
      */
     protected $newsletter;
-    
+
     /**
      * @var string
      *
@@ -36,14 +52,14 @@ class User extends BaseUser
      * @ORM\JoinColumn(nullable=true)
      */
     private $location;
-    
+
     /**
      * @var Categories
      *
      * @ORM\ManyToMany(targetEntity="Application\Sonata\ClassificationBundle\Entity\Category", mappedBy="users")
      */
     private $categories;
-    
+
     /**
      * @var Institution
      *
@@ -52,17 +68,14 @@ class User extends BaseUser
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="institutions_id", referencedColumnName="id",nullable=true)})
      */
-
     private $institutions;
-
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -72,8 +85,7 @@ class User extends BaseUser
      * @param boolean $newsletter
      * @return User
      */
-    public function setNewsletter($newsletter)
-    {
+    public function setNewsletter($newsletter) {
         $this->newsletter = $newsletter;
 
         return $this;
@@ -84,8 +96,7 @@ class User extends BaseUser
      *
      * @return boolean 
      */
-    public function getNewsletter()
-    {
+    public function getNewsletter() {
         return $this->newsletter;
     }
 
@@ -96,8 +107,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setLocation(\LocationBundle\Entity\Location $location = null)
-    {
+    public function setLocation(\LocationBundle\Entity\Location $location = null) {
         $this->location = $location;
 
         return $this;
@@ -108,8 +118,7 @@ class User extends BaseUser
      *
      * @return \LocationBundle\Entity\Location
      */
-    public function getLocation()
-    {
+    public function getLocation() {
         return $this->location;
     }
 
@@ -120,8 +129,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addCategory(\ClassificationBundle\Entity\Category $category)
-    {
+    public function addCategory(\ClassificationBundle\Entity\Category $category) {
         $this->categories[] = $category;
 
         return $this;
@@ -132,8 +140,7 @@ class User extends BaseUser
      *
      * @param \ClassificationBundle\Entity\Category $category
      */
-    public function removeCategory(\ClassificationBundle\Entity\Category $category)
-    {
+    public function removeCategory(\ClassificationBundle\Entity\Category $category) {
         $this->categories->removeElement($category);
     }
 
@@ -142,8 +149,7 @@ class User extends BaseUser
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->categories;
     }
 
@@ -154,8 +160,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addInstitution(\InstitutionBundle\Entity\Institution $institution)
-    {
+    public function addInstitution(\InstitutionBundle\Entity\Institution $institution) {
         $this->institutions[] = $institution;
         $institution->addUtilisateur($this);
 
@@ -167,8 +172,7 @@ class User extends BaseUser
      *
      * @param \InstitutionBundle\Entity\Institution $institution
      */
-    public function removeInstitution(\InstitutionBundle\Entity\Institution $institution)
-    {
+    public function removeInstitution(\InstitutionBundle\Entity\Institution $institution) {
         $this->institutions->removeElement($institution);
         $institution->removeUtilisateur($this);
     }
@@ -178,8 +182,53 @@ class User extends BaseUser
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getInstitutions()
-    {
+    public function getInstitutions() {
         return $this->institutions;
     }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function addUserList() {
+        var_dump('prePersist');
+        if ($this->getNewsletter() == true) {
+            $cle = ['api_key' => '9ROQwEhyfb35MInx', 'timeout' => 5000];
+            $mailin = new Mailin($cle);
+
+            $data = array(
+                "id" => 12,
+                "users" => array($this->getEmail())
+                );
+
+            $mailin->add_users_list($data);
+        }
+    }
+    
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function updateUserList() {
+        var_dump('preUpdate');
+        if ($this->getNewsletter() == true) {
+            $cle = ['api_key' => '9ROQwEhyfb35MInx', 'timeout' => 5000];
+            $mailin = new Mailin($cle);
+            $email = $this->getEmail();
+            $data = array(
+                "id" => 12,
+                "users" => array($email)
+                );
+            $mailin->add_users_list($data);
+            
+        }elseif($this->getNewsletter() == false){
+            $cle = ['api_key' => '9ROQwEhyfb35MInx', 'timeout' => 5000];
+            $mailin = new Mailin($cle);
+            $email = $this->getEmail();
+            $data = array(
+                "id" => 12,
+                "users" => array($email)
+                );
+                $mailin->delete_users_list($data);
+        }
+    }
+
 }
