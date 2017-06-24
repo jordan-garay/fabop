@@ -37,15 +37,14 @@ class AppKernel extends Kernel
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new UserBundle\UserBundle(),
             new LocationBundle\LocationBundle(),
-            new Sonata\ClassificationBundle\SonataClassificationBundle(),
-            new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(),
-            new ClassificationBundle\ClassificationBundle(),
             new InstitutionBundle\InstitutionBundle(),
             new ExportBundle\ExportBundle(),
             new SendinBlue\SendinBlueApiBundle\SendinBlueApiBundle(),
+            new CategoryBundle\CategoryBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+            $bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

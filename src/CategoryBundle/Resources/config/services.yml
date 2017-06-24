@@ -1,0 +1,21 @@
+services:
+#    category.example:
+#        class: CategoryBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    category.admin.participation:
+        class: CategoryBundle\Admin\ParticipationAdmin
+        arguments: [~, CategoryBundle\Entity\Participation, CategoryBundle:ParticipationAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Participation }
+
+    category.admin.category:
+        class: CategoryBundle\Admin\CategoryAdmin
+        arguments: [~, CategoryBundle\Entity\Category, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Category }
+
+    category.admin.spectacle:
+        class: CategoryBundle\Admin\SpectacleAdmin
+        arguments: [~, CategoryBundle\Entity\Spectacle, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Spectacle }

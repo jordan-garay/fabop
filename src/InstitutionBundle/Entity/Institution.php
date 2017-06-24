@@ -153,8 +153,7 @@ class Institution
      */
     public function addUtilisateur(\UserBundle\Entity\User $utilisateur)
     {
-        $this->utilisateurs[] = $utilisateur;
-        $utilisateur->addInstitution($this);
+        $this->utilisateurs->add($utilisateur);
 
         return $this;
     }
@@ -167,7 +166,6 @@ class Institution
     public function removeUtilisateur(\UserBundle\Entity\User $utilisateur)
     {
         $this->utilisateurs->removeElement($utilisateur);
-        $utilisateur->removeInstitution($this);
     }
 
     /**

@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\UserBundle\Admin\Model\UserAdmin as SonataUserAdmin;
 use LocationBundle\Form\Type\LocationType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class UserAdmin extends SonataUserAdmin {
 
@@ -48,6 +49,7 @@ class UserAdmin extends SonataUserAdmin {
                 ->add('gender')
                 ->add('newsletter')
                 ->add('institutions')
+                ->add('participations')
                 ->add('_action', null, array(
                     'actions' => array(
                         'show' => array(),
@@ -74,7 +76,17 @@ class UserAdmin extends SonataUserAdmin {
                 ->add('dateOfBirth')
                 ->add('gender')
                 ->add('newsletter')
-                ->add('institutions')
+                ->add('institutions', EntityType::class, array(
+                    'class' => 'InstitutionBundle:Institution',
+                    'multiple' => true,
+                    'by_reference' => false
+                ) )
+                ->add('participations', EntityType::class, array(
+                    'class' => 'CategoryBundle:Participation',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false
+                ) )
         ;
     }
 

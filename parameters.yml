@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: lfovdlcoqpclem.mysql.db
+    database_port: null
+    database_name: lfovdlcoqpclem
+    database_user: lfovdlcoqpclem
+    database_password: Aida1871
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: 9b133225f89f43ee930997256d9c600213db8769

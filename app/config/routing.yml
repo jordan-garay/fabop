@@ -2,6 +2,11 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
+category:
+    resource: "@CategoryBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 export:
     resource: "@ExportBundle/Controller/"
     type:     annotation
@@ -9,11 +14,6 @@ export:
 
 institution:
     resource: "@InstitutionBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-classification:
-    resource: "@ClassificationBundle/Controller/"
     type:     annotation
     prefix:   /
 
@@ -57,4 +57,4 @@ _sonata_admin:
   resource: .
   type: sonata_admin
   prefix: /admin
-    
+

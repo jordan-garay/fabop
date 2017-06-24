@@ -29,7 +29,7 @@ class GetAllListCommand extends Command {
         $cle = ['api_key' => '9ROQwEhyfb35MInx', 'timeout' => 5000];
         $mailin = new Mailin($cle);
 
-        $data = array( "listids" => array(12),
+        $data = array( "listids" => array(17),
       "page" => 1,
       "page_limit" => 200
     );
