@@ -4,18 +4,18 @@ services:
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
     category.admin.participation:
         class: CategoryBundle\Admin\ParticipationAdmin
-        arguments: [~, CategoryBundle\Entity\Participation, CategoryBundle:ParticipationAdmin]
+        arguments: [~, CategoryBundle\Entity\Participation, UserBundle:UserAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Participation }
 
     category.admin.category:
         class: CategoryBundle\Admin\CategoryAdmin
-        arguments: [~, CategoryBundle\Entity\Category, SonataAdminBundle:CRUD]
+        arguments: [~, CategoryBundle\Entity\Category, UserBundle:UserAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Category }
 
     category.admin.spectacle:
         class: CategoryBundle\Admin\SpectacleAdmin
-        arguments: [~, CategoryBundle\Entity\Spectacle, SonataAdminBundle:CRUD]
+        arguments: [~, CategoryBundle\Entity\Spectacle, UserBundle:UserAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Spectacle }

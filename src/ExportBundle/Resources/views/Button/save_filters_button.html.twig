@@ -1,7 +1,9 @@
 <li>
-    {% set query = app.request.requestUri|url_encode %}
+    {% if app.request.query.get('filter')['participations'] is defined %}
+        {% set query = app.request.requestUri|url_encode %}
         <a href="{{ path('save_filter', {'query' : query}) }}">
             <i class="fa fa-file-image-o"></i>
             Sauvegarder les filtres
         </a>
+    {%endif%}
 </li>

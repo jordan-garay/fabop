@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title></title>
+        <style>
+            h1{
+                color : red;
+            }
+            #badge{
+                height: {{modelBadge.height}}px;
+                width : {{modelBadge.width}}px;
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Salut {{dump(user.location.locality)}}</h1>
+        {{dump(modelBadge)}}
+
+        <div id="badge">
+            <p>test</p>
+        </div>
+    </body>
+
+</html>
+

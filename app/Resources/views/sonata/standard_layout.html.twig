@@ -77,16 +77,16 @@ file that was distributed with this source code.
 
             {# localize select2 #}
             {% if sonata_admin.adminPool.getOption('use_select2') %}
-                {% if locale == 'pt' %}{% set locale = 'pt_PT' %}{% endif %}
+            {% if locale == 'pt' %}{% set locale = 'pt_PT' %}{% endif %}
 
-                {# omit default EN locale #}
-                {% if locale[:2] != 'en' %}
-                    <script src="{{ asset('bundles/sonatacore/vendor/select2/select2_locale_' ~ locale|replace({'_':'-'}) ~ '.js') }}"></script>
-                {% endif %}
+            {# omit default EN locale #}
+            {% if locale[:2] != 'en' %}
+                <script src="{{ asset('bundles/sonatacore/vendor/select2/select2_locale_' ~ locale|replace({'_':'-'}) ~ '.js') }}"></script>
             {% endif %}
-        {% endblock %}
+        {% endif %}
+    {% endblock %}
 
-        <title>
+    <title>
         {% block sonata_head_title %}
             {{ 'Admin'|trans({}, 'SonataAdminBundle') }}
 
@@ -104,7 +104,7 @@ file that was distributed with this source code.
                             {%- set translation_domain = menu.extra('translation_domain', 'messages') -%}
                             {%- set label = menu.label -%}
                             {%- if translation_domain is not same as(false) -%}
-                                {%- set label = label|trans(menu.extra('translation_params', {}), translation_domain) -%}
+                            {%- set label = label|trans(menu.extra('translation_params', {}), translation_domain) -%}
                             {%- endif -%}
 
                             {{ label }}
@@ -113,9 +113,9 @@ file that was distributed with this source code.
                 {% endif %}
             {% endif %}
         {% endblock %}
-        </title>
-    </head>
-    <body {% block body_attributes %}class="sonata-bc skin-black fixed"{% endblock %}>
+    </title>
+</head>
+<body {% block body_attributes %}class="sonata-bc skin-black fixed"{% endblock %}>
 
     <div class="wrapper">
 
@@ -123,9 +123,9 @@ file that was distributed with this source code.
             <header class="main-header">
                 {% block sonata_header_noscript_warning %}
                     <noscript>
-                        <div class="noscript-warning">
-                            {{ 'noscript_warning'|trans({}, 'SonataAdminBundle') }}
-                        </div>
+                    <div class="noscript-warning">
+                        {{ 'noscript_warning'|trans({}, 'SonataAdminBundle') }}
+                    </div>
                     </noscript>
                 {% endblock %}
                 {% block logo %}
@@ -157,7 +157,7 @@ file that was distributed with this source code.
                                                         {%- set translation_domain = menu.extra('translation_domain', 'messages') -%}
                                                         {%- set label = menu.label -%}
                                                         {%- if translation_domain is not same as(false) -%}
-                                                            {%- set label = label|trans(menu.extra('translation_params', {}), translation_domain) -%}
+                                                        {%- set label = label|trans(menu.extra('translation_params', {}), translation_domain) -%}
                                                         {%- endif -%}
 
                                                         {% if not loop.last %}
@@ -176,12 +176,12 @@ file that was distributed with this source code.
                                                             </li>
                                                         {% else %}
                                                             <li class="active"><span>{{ label }}</span></li>
+                                                                {% endif %}
+                                                            {% endfor %}
                                                         {% endif %}
-                                                    {% endfor %}
-                                                {% endif %}
-                                            {% else %}
-                                                {{ _breadcrumb|raw }}
-                                            {% endif %}
+                                                    {% else %}
+                                                        {{ _breadcrumb|raw }}
+                                                    {% endif %}
                                         </ol>
                                     {% endif %}
                                 </div>
@@ -281,23 +281,23 @@ file that was distributed with this source code.
                                                     <div class="nav navbar-right btn-group">
                                                         {% for mode, settings in admin.listModes %}
                                                             <a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}"><i class="{{ settings.class }}"></i></a>
-                                                        {% endfor %}
+                                                            {% endfor %}
                                                     </div>
                                                 {% endif %}
 
                                                 {% block sonata_admin_content_actions_wrappers %}
                                                     {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
                                                         <ul class="nav navbar-nav navbar-right">
-                                                        {% if _actions|split('</a>')|length > 2 %}
-                                                            <li class="dropdown sonata-actions">
-                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>
-                                                                <ul class="dropdown-menu" role="menu">
-                                                                    {{ _actions|raw }}
-                                                                </ul>
-                                                            </li>
-                                                        {% else %}
-                                                            {{ _actions|raw }}
-                                                        {% endif %}
+                                                            {% if _actions|split('</a>')|length > 2 %}
+                                                                <li class="dropdown sonata-actions">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>
+                                                                    <ul class="dropdown-menu" role="menu">
+                                                                        {{ _actions|raw }}
+                                                                    </ul>
+                                                                </li>
+                                                            {% else %}
+                                                                {{ _actions|raw }}
+                                                            {% endif %}
                                                         </ul>
                                                     {% endif %}
                                                 {% endblock sonata_admin_content_actions_wrappers %}
@@ -358,12 +358,22 @@ file that was distributed with this source code.
         {% block bootlint %}
             {# Bootlint - https://github.com/twbs/bootlint#in-the-browser #}
             <script type="text/javascript">
-                javascript:(function(){var s=document.createElement("script");s.onload=function(){bootlint.showLintReportForCurrentDocument([], {hasProblems: false, problemFree: false});};s.src="https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";document.body.appendChild(s)})();
+                    javascript:(function () {
+                        var s = document.createElement("script");
+                        s.onload = function () {
+                            bootlint.showLintReportForCurrentDocument([], {hasProblems: false, problemFree: false});
+                        };
+                        s.src = "https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";
+                        document.body.appendChild(s)
+                    })();
             </script>
         {% endblock %}
     {% endif %}
     {% block javascripts_footer %}
-        <script>console.log("test");</script>
+        {% if app.request.requestUri is defined and app.request.requestUri == "/admin/user/user/list"%}
+            <script src="{{ asset('js/editPAO.js') }}"></script>
+        {% endif %}
     {% endblock javascripts_footer %}
-    </body>
+
+</body>
 </html>

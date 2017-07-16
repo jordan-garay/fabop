@@ -1,6 +1,11 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+    
+pao:
+    resource: "@PAOBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 category:
     resource: "@CategoryBundle/Controller/"

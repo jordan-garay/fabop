@@ -1,0 +1,12 @@
+services:
+    pao.menu_listener:
+        class: PAOBundle\EventListener\MenuBuilderListener
+        arguments: [~, PAOBundle\Entity\PAO, UserBundle:UserAdmin]
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
+
+    pao.admin.badge:
+        class: PAOBundle\Admin\BadgeAdmin
+        arguments: [~, PAOBundle\Entity\Badge, PAOBundle:BadgeAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Badge }

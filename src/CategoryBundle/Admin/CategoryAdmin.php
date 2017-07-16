@@ -18,6 +18,7 @@ class CategoryAdmin extends AbstractAdmin
         $datagridMapper
             ->add('id')
             ->add('nom')
+            ->add('parent')
         ;
     }
 
@@ -28,6 +29,10 @@ class CategoryAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('nom')
+            ->add('category.color', "string", array(
+                        'template' => 'CategoryBundle:CRUD:color.html.twig'
+                    ))
+            ->add('parent')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -45,6 +50,8 @@ class CategoryAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('nom')
+            ->add('color', 'sonata_type_color_selector')
+            ->add('parent')
         ;
     }
 
@@ -55,6 +62,21 @@ class CategoryAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('nom')
+            ->add('parent')
+            
         ;
+    }
+    
+    public function configureBatchActions($actions) {
+        if (
+                $this->hasRoute('edit') && $this->hasAccess('edit') &&
+                $this->hasRoute('delete') && $this->hasAccess('delete')
+        ) {
+            $actions['Merge'] = array(
+                'ask_confirmation' => false
+            );
+        }
+
+        return $actions;
     }
 }

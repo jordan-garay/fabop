@@ -1,0 +1,18 @@
+
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+
+    {% if object.category is defined %}
+        {% for category in object.category %}
+            <div style="text-align: center; display: inline-block;">
+                <p style="color:{{category.color}};" >█</p>
+            </div>
+        {% endfor %}
+    {%else%}
+        <div style="text-align: center;">
+            <p style="color:{{object.color}};" >█</p>
+        </div>
+    {% endif %}
+
+{% endblock %}

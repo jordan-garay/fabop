@@ -4,6 +4,6 @@ services:
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
     institution.admin.institution:
         class: InstitutionBundle\Admin\InstitutionAdmin
-        arguments: [~, InstitutionBundle\Entity\Institution, InstitutionBundle:InstitutionAdmin]
+        arguments: [~, InstitutionBundle\Entity\Institution, UserBundle:UserAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Institution }

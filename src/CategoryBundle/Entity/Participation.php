@@ -42,6 +42,8 @@ class Participation
      * @ORM\JoinTable(name="participations_users")
      */
     private $users;
+    
+    
 
     public function __construct() {
         $this->category = new \Doctrine\Common\Collections\ArrayCollection();
@@ -162,4 +164,6 @@ class Participation
     {
         return $this->users;
     }
+
+    
 }

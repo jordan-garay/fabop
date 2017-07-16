@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\CoreBundle\Form\Type\ColorSelectorType;
 
 class ParticipationAdmin extends AbstractAdmin
 {
@@ -30,6 +31,9 @@ class ParticipationAdmin extends AbstractAdmin
         $listMapper
             ->add('spectacle')
             ->add('category')
+            ->add('category.color', "string", array(
+                        'template' => 'CategoryBundle:CRUD:color.html.twig'
+                    ))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -61,7 +65,9 @@ class ParticipationAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
+            ->add('spectacle')
+            ->add('category')
+            ->add('users')
         ;
     }
 }

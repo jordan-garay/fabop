@@ -29,6 +29,8 @@ class UserAdmin extends SonataUserAdmin {
                 ->add('dateOfBirth')
                 ->add('gender')
                 ->add('newsletter')
+                ->add('participations')
+                ->add('institutions')
         ;
     }
 
@@ -80,13 +82,13 @@ class UserAdmin extends SonataUserAdmin {
                     'class' => 'InstitutionBundle:Institution',
                     'multiple' => true,
                     'by_reference' => false
-                ) )
+                ))
                 ->add('participations', EntityType::class, array(
                     'class' => 'CategoryBundle:Participation',
                     'multiple' => true,
                     'expanded' => true,
                     'by_reference' => false
-                ) )
+                ))
         ;
     }
 
@@ -95,32 +97,59 @@ class UserAdmin extends SonataUserAdmin {
      */
     protected function configureShowFields(ShowMapper $showMapper) {
         $showMapper
-                ->add('firstname')
-                ->add('lastname')
-                ->add('username')
-                ->add('email')
-                ->add('phone')
-                ->add('location')
-                ->add('enabled')
-                ->add('roles')
-                ->add('dateOfBirth')
-                ->add('gender')
-                ->add('newsletter')
-                ->add('institutions')
+                ->with('Général', array(
+                    'class'       => 'col-md-6',
+                ))
+                    ->add('firstname')
+                    ->add('lastname')
+                    ->add('username')
+                    ->add('email')
+                    ->add('phone')
+                    ->add('location')
+                    ->add('enabled')
+                    ->add('roles')
+                    ->add('dateOfBirth')
+                    ->add('gender')
+                    ->add('newsletter')
+                    ->add('institutions')
+                ->end()
+                ->with('Historique', array(
+                    'class'       => 'col-md-6',
+                    'box_class'   => 'box box-solid box-success',
+                    'description' => 'Lorem ipsum',
+                ))
+                ->add('participations', 'participations.annee')
+                ->end()
         ;
     }
-    
-    public function configureActionButtons($action, $object = null)
-        {
-            $list = parent::configureActionButtons($action, $object);
 
-            if ( in_array($action, ['list'] )) {
-                $list['save_filter'] = array(
-                    'template' => 'ExportBundle:Button:save_filters_button.html.twig',
-                );
-            }
+    public function configureActionButtons($action, $object = null) {
+        $list = parent::configureActionButtons($action, $object);
 
-            return $list;
+        if (in_array($action, ['list'])) {
+            $list['save_filter'] = array(
+                'template' => 'ExportBundle:Button:save_filters_button.html.twig',
+            );
+            $list['edit_document'] = array(
+                'template' => 'AppBundle:Button:edit_document_button.html.twig',
+            );
         }
+
+        return $list;
+    }
+
+    public function configureBatchActions($actions) {
+        if (
+                $this->hasRoute('edit') && $this->hasAccess('edit') &&
+                $this->hasRoute('delete') && $this->hasAccess('delete')
+        ) {
+            $actions['Merge'] = array(
+                'ask_confirmation' => false,
+                'label' => 'Merge'
+            );
+        }
+
+        return $actions;
+    }
 
 }

@@ -1,0 +1,9 @@
+<li>
+    {% if app.request.query.get('filter')['participations'] is defined and app.request.query.get('filter')['participations']['value'] != ""%}
+        {% set parameters = app.request.query.get('filter')['participations']['value'] %}
+        <a href="{{ path('edit_document', {'parameters' : parameters}) }}">
+            <i class="fa fa-file"></i>
+            Editez des documents
+        </a>
+    {%endif%}
+</li>

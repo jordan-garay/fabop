@@ -15,4 +15,14 @@ class DefaultController extends Controller
     {
         return $this->redirect('/admin');
     }
+    
+    /**
+    * @Route("/user/user/edit_document/{parameters}", name="edit_document")
+    */
+    public function saveFilterAction(array $parameters)
+    {
+        var_dump($parameters);
+
+        return $this->redirectToRoute('sonata_admin_dashboard');
+    }
 }

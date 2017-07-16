@@ -29,14 +29,35 @@ class Category
      */
     private $nom;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=255)
+     */
+    private $color;
+    
      /**
      * Many Category have Many Participation.
      * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Participation", mappedBy="category")
      */
     private $participations;
+    
+    /**
+     * One Category has Many Categories.
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * Many Categories have One Category.
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
 
     public function __construct() {
         $this->participations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function __toString() {
@@ -110,5 +131,87 @@ class Category
     public function getParticipations()
     {
         return $this->participations;
+    }
+    
+    /**
+     * Set color
+     *
+     * @param string $color
+     *
+     * @return Participation
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \CategoryBundle\Entity\Category $child
+     *
+     * @return Category
+     */
+    public function addChild(\CategoryBundle\Entity\Category $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \CategoryBundle\Entity\Category $child
+     */
+    public function removeChild(\CategoryBundle\Entity\Category $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \CategoryBundle\Entity\Category $parent
+     *
+     * @return Category
+     */
+    public function setParent(\CategoryBundle\Entity\Category $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \CategoryBundle\Entity\Category
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
