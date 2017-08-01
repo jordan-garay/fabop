@@ -1,25 +1,111 @@
+{% set firstCat = searchparent(user.participations|last.category|last) %}
 <html>
     <head>
         <title></title>
         <style>
-            h1{
-                color : red;
-            }
             #badge{
-                height: {{modelBadge.height}}px;
-                width : {{modelBadge.width}}px;
-                background-color: blue;
+                height: {{modelBadge.height}}cm;
+                width : {{modelBadge.width}}cm;
+                background-color: white;
+                border : 1px solid black;
+                position: relative;
+                text-align: center;
+            }
+            .imageSpectacle{
+                width: 50%;
+                display: inline-block;
+            }
+            .imageSpectacle img{
+                width : 2cm;
+            }
+            
+            .imageSpectacle, .spectacle{
+                margin-top : 10px !important;
+            }
+
+            .spectacle{
+                float: right;
+                display: inline-block;
+                width : 50%;
+                margin: 0;
+                line-height: 25px;
+            }
+            
+            .spectacle h1{
+                margin : 0;
+            }
+            .lieux, .date, .annee{
+                font-size: 10px;
+                margin : 0;
+                font-weight: bold;
+            }
+            .user{
+                width: 100%;
+                display: inline-block;
+                text-align: center;
+            }
+
+            .nom{
+                font-weight: bold;
+            }
+            .formation{
+                font-size: 12px;
+            }
+            .categorie{
+                font-size: 10px;
+                text-transform: uppercase;
+                background-color: {{firstCat.color}};
+                padding : 10px;
+                font-weight: bold;
+            }
+            div.categorie:nth-child(3){
+                position: absolute;
+                bottom: 0;
+                padding : 10px 0;
+                width : {{modelBadge.width}}cm;
+            }
+            .logo-fabop{
+                width : 50px;
+                float: left;
+                margin-left: 15px;
             }
         </style>
     </head>
-    <body>
-        <h1>Salut {{dump(user.location.locality)}}</h1>
-        {{dump(modelBadge)}}
+    <body id="badge">
+        <div class="categorie">{{firstCat.nom}}</div>
+        <div>
+            <div class="imageSpectacle">
+                <img src="{{ asset('Images/'~modelBadge.file)}}">
+            </div>
+            <div class="spectacle">
+                <h1>AIDA</h1>
+                <p class="lieux">Zenith d'Orleans</p>
+                <p class="date">17, 18 et 19 mars</p>
+                <p class="annee">2017</p>
+            </div>
+            <div class="user">
+                <p class="nom">{{user.lastname}} {{user.firstname}}</p>
+                {#{% for institution in user.institutions%}
+                    <p class="etablissement">{{institution.nom}}</p>
+                {% endfor %}#}
+                {% set cat = firstCat %}
+                {% if cat.children is defined %}
+                    {% for children in cat.children %}
+                        <p class="formation">{{children.nom}}</p>
+                    {% endfor %}
+                    {% set cat = cat.children|last %}
+                    {% if cat.children is defined %}
+                        {% for children in cat.children %}
+                            <p class="formation">{{children.nom}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+                <img class="logo-fabop" src="{{ asset('Images/logo-fabop.jpg')}}">
 
-        <div id="badge">
-            <p>test</p>
+            </div>
         </div>
+        <div class="categorie">{{firstCat.nom}}</div>
+
     </body>
 
 </html>
-

@@ -41,7 +41,7 @@ class Location
     /**
      * @var string
      *
-     * @ORM\Column(name="locality", type="string", length=100, nullable=false)
+     * @ORM\Column(name="locality", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="La ville n'est pas indiquée")
      */
     private $locality;
@@ -84,7 +84,7 @@ class Location
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=100, nullable=false)
+     * @ORM\Column(name="country", type="string", length=100, nullable=true)
      */
     private $country;
 

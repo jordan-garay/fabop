@@ -5,7 +5,7 @@ namespace UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use SendinBlue\SendinBlueApiBundle\Wrapper\Mailin;
-new \Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -13,6 +13,13 @@ new \Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\AttributeOverrides({
+ *      @ORM\AttributeOverride(name="password",
+ *          column=@ORM\Column(
+ *              nullable = true
+ *          )
+ *      )
+ * })
  */
 class User extends BaseUser {
 
@@ -28,7 +35,7 @@ class User extends BaseUser {
     /**
      * @var bool
      *
-     * @ORM\Column(name="newsletter", type="boolean")
+     * @ORM\Column(name="newsletter", type="boolean", nullable=true)
      */
     protected $newsletter;
 
@@ -49,18 +56,19 @@ class User extends BaseUser {
      *      inverseJoinColumns={@ORM\JoinColumn(name="institutions_id", referencedColumnName="id",nullable=true)})
      */
     private $institutions;
-    
-     /**
+
+    /**
      * Many Users have Many Participation.
      * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Participation", mappedBy="users")
      */
     private $participations;
 
     public function __construct() {
+        parent::__construct();
         $this->participations = new ArrayCollection();
         $this->institutions = new ArrayCollection();
     }
-    
+
     public function __toString() {
         parent::__toString();
         return (string) $this->getUsername();
@@ -163,12 +171,12 @@ class User extends BaseUser {
             $data = array(
                 "id" => 17,
                 "users" => array($this->getEmail())
-                );
+            );
 
             $mailin->add_users_list($data);
         }
     }
-    
+
     /**
      * @ORM\PreUpdate()
      */
@@ -181,21 +189,19 @@ class User extends BaseUser {
             $data = array(
                 "id" => 17,
                 "users" => array($email)
-                );
+            );
             $mailin->add_users_list($data);
-            
-        }elseif($this->getNewsletter() == false){
+        } elseif ($this->getNewsletter() == false) {
             $cle = ['api_key' => '9ROQwEhyfb35MInx', 'timeout' => 5000];
             $mailin = new Mailin($cle);
             $email = $this->getEmail();
             $data = array(
                 "id" => 17,
                 "users" => array($email)
-                );
-                $mailin->delete_users_list($data);
+            );
+            $mailin->delete_users_list($data);
         }
     }
-
 
     /**
      * Add participation
@@ -204,8 +210,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function addParticipation(\CategoryBundle\Entity\Participation $participation)
-    {
+    public function addParticipation(\CategoryBundle\Entity\Participation $participation) {
         $this->participations->add($participation);
         $participation->addUser($this);
 
@@ -217,8 +222,7 @@ class User extends BaseUser {
      *
      * @param \CategoryBundle\Entity\Participation $participation
      */
-    public function removeParticipation(\CategoryBundle\Entity\Participation $participation)
-    {
+    public function removeParticipation(\CategoryBundle\Entity\Participation $participation) {
         $this->participations->removeElement($participation);
         $participation->removeUser($this);
     }
@@ -228,8 +232,8 @@ class User extends BaseUser {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getParticipations()
-    {
+    public function getParticipations() {
         return $this->participations;
     }
+
 }

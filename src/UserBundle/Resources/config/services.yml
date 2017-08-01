@@ -9,3 +9,9 @@ services:
             - { name: sonata.admin, manager_type: orm, group: admin, label: User }
         calls:
           - [ setTranslationDomain, [UserBundle]]
+          
+          
+    searchparent:
+        class : UserBundle\Twig\SearchParentExtension
+        tags:
+            - { name : twig.extension }

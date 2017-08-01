@@ -28,6 +28,20 @@ class Spectacle
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lieu", type="string", length=255)
+     */
+    private $lieu;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dateSpectacle", type="string", length=255)
+     */
+    private $dateSpectacle;
 
     /**
      * @var string
@@ -142,5 +156,53 @@ class Spectacle
     public function getParticipations()
     {
         return $this->participations;
+    }
+
+    /**
+     * Set lieu
+     *
+     * @param string $lieu
+     *
+     * @return Spectacle
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return string
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * Set dateSpectacle
+     *
+     * @param string $dateSpectacle
+     *
+     * @return Spectacle
+     */
+    public function setDateSpectacle($dateSpectacle)
+    {
+        $this->dateSpectacle = $dateSpectacle;
+
+        return $this;
+    }
+
+    /**
+     * Get dateSpectacle
+     *
+     * @return string
+     */
+    public function getDateSpectacle()
+    {
+        return $this->dateSpectacle;
     }
 }

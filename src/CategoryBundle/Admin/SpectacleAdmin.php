@@ -18,6 +18,8 @@ class SpectacleAdmin extends AbstractAdmin
         $datagridMapper
             ->add('nom')
             ->add('annee')
+            ->add('lieu')
+            ->add('dateSpectacle')
         ;
     }
 
@@ -29,6 +31,8 @@ class SpectacleAdmin extends AbstractAdmin
         $listMapper
             ->add('nom')
             ->add('annee')
+            ->add('lieu')
+            ->add('dateSpectacle')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -47,6 +51,8 @@ class SpectacleAdmin extends AbstractAdmin
         $formMapper
             ->add('nom')
             ->add('annee')
+            ->add('lieu')
+            ->add('dateSpectacle')
         ;
     }
 
@@ -58,6 +64,8 @@ class SpectacleAdmin extends AbstractAdmin
         $showMapper
             ->add('nom')
             ->add('annee')
+            ->add('lieu')
+            ->add('dateSpectacle')
         ;
     }
 }

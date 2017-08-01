@@ -43,7 +43,7 @@ class UserAdminController extends CRUDController {
                 $html = $html . $this->render('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel));
 
                 /** Pour debbugage de template */
-                //return $html = $this->render('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel));
+                return $html = $this->render('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel));
             }
 
             $dompdf->loadHtml($html);

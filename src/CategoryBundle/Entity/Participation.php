@@ -54,9 +54,9 @@ class Participation
         $categories = $this->getCategory();
         $stringCat = " ";
         for($i = 0; $i < count($categories); ++$i){
-            $stringCat = $stringCat." ".$categories[$i]->getNom();
+            $stringCat = $stringCat." ".$this->getSpectacle()->getAnnee()." ".$categories[$i]->getNom();
         }
-        return (string) $this->getSpectacle().$stringCat;
+        return (string) $stringCat." ".$this->getSpectacle();
     }
 
 

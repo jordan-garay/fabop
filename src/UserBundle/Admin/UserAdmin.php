@@ -10,8 +10,19 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\UserBundle\Admin\Model\UserAdmin as SonataUserAdmin;
 use LocationBundle\Form\Type\LocationType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class UserAdmin extends SonataUserAdmin {
+    
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection
+            ->remove('create')
+            ;
+
+    }
 
     /**
      * @param DatagridMapper $datagridMapper
@@ -44,14 +55,14 @@ class UserAdmin extends SonataUserAdmin {
                 ->add('username')
                 ->add('email')
                 ->add('phone')
-                ->add('location')
+                ->add('location', LocationType::class)
                 ->add('enabled')
                 ->add('roles')
                 ->add('dateOfBirth')
                 ->add('gender')
                 ->add('newsletter')
                 ->add('institutions')
-                ->add('participations')
+                ->add('participations', 'collection')
                 ->add('_action', null, array(
                     'actions' => array(
                         'show' => array(),
@@ -70,6 +81,13 @@ class UserAdmin extends SonataUserAdmin {
                 ->add('firstname')
                 ->add('lastname')
                 ->add('username')
+//                ->add('plainPassword', RepeatedType::class, array(
+//                    'type' => PasswordType::class,
+//                    'options' => array('translation_domain' => 'FOSUserBundle'),
+//                    'first_options' => array('label' => 'form.new_password', 'attr' => array('class' => 'form-control input-sm chat-input' )),
+//                    'second_options' => array('label' => 'form.new_password_confirmation', 'attr' => array('class' => 'form-control input-sm chat-input')),
+//                    'invalid_message' => 'fos_user.password.mismatch',
+//                ))
                 ->add('email')
                 ->add('phone')
                 ->add('location', LocationType::class)
@@ -98,27 +116,29 @@ class UserAdmin extends SonataUserAdmin {
     protected function configureShowFields(ShowMapper $showMapper) {
         $showMapper
                 ->with('Général', array(
-                    'class'       => 'col-md-6',
+                    'class' => 'col-md-6',
                 ))
-                    ->add('firstname')
-                    ->add('lastname')
-                    ->add('username')
-                    ->add('email')
-                    ->add('phone')
-                    ->add('location')
-                    ->add('enabled')
-                    ->add('roles')
-                    ->add('dateOfBirth')
-                    ->add('gender')
-                    ->add('newsletter')
-                    ->add('institutions')
+                ->add('firstname')
+                ->add('lastname')
+                ->add('username')
+                ->add('email')
+                ->add('phone')
+                ->add('location', LocationType::class)
+                ->add('enabled')
+                ->add('roles')
+                ->add('dateOfBirth')
+                ->add('gender')
+                ->add('newsletter')
+                ->add('institutions')
                 ->end()
                 ->with('Historique', array(
-                    'class'       => 'col-md-6',
-                    'box_class'   => 'box box-solid box-success',
+                    'class' => 'col-md-6',
+                    'box_class' => 'box box-solid box-success',
                     'description' => 'Lorem ipsum',
                 ))
-                ->add('participations', 'participations.annee')
+                ->add('participations', 'collection', array(
+                    'label' => 'Historique',
+                ))
                 ->end()
         ;
     }

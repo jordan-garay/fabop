@@ -47,16 +47,16 @@ class Badge {
     private $updated;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="width", type="integer")
+     * @ORM\Column(name="width", type="float")
      */
     private $width;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="height", type="integer")
+     * @ORM\Column(name="height", type="float")
      */
     private $height;
 
