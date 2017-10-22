@@ -9,13 +9,13 @@ class MenuBuilderListener
 {
     public function addMenuItems(ConfigureMenuEvent $event)
     {
-        $menu = $event->getMenu();
-
-        $child = $menu->addChild('list', [
-            'label' => 'PAO',
-            'route' => 'list',
-        ])->setExtras([
-            'icon' => '<i class="fa fa-bar-chart"></i>',
-        ]);
+//        $menu = $event->getMenu();
+//
+//        $child = $menu->addChild('list', [
+//            'label' => 'PAO',
+//            'route' => 'list',
+//        ])->setExtras([
+//            'icon' => '<i class="fa fa-bar-chart"></i>',
+//        ]);
     }
 }

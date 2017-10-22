@@ -45,21 +45,21 @@ class BadgeAdmin extends AbstractAdmin {
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper) {
-        
+
         // get the current Image instance
         $image = $this->getSubject();
-        
+
         $fileFieldOptions = array('required' => false, 'data_class' => null);
         if ($image && ($webPath = $image->getFile())) {
             // get the container so the full path to the image can be set
             $container = $this->getConfigurationPool()->getContainer();
-            $fullPath = '/Images/'.$webPath;
+            $fullPath = '/Images/' . $webPath;
             dump($container->get('request')->server->get('DOCUMENT_ROOT'));
 
             // add a 'help' option containing the preview's img tag
-            $fileFieldOptions['help'] = '<img src="'.$fullPath.'" class="admin-preview" />';
+            $fileFieldOptions['help'] = '<img src="' . $fullPath . '" class="admin-preview" />';
         }
-        
+
         $formMapper
                 ->add('nom')
                 ->add('file', 'file', $fileFieldOptions)

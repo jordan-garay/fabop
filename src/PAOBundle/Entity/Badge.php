@@ -249,5 +249,4 @@ class Badge {
     public function getUpdated() {
         return $this->updated;
     }
-
 }

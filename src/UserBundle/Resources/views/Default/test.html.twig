@@ -7,9 +7,9 @@
                 height: {{modelBadge.height}}cm;
                 width : {{modelBadge.width}}cm;
                 background-color: white;
-                border : 1px solid black;
+                border : 2px solid black;
                 position: relative;
-                text-align: center;
+                margin-bottom: 10px;
             }
             .imageSpectacle{
                 width: 50%;
@@ -24,11 +24,11 @@
             }
 
             .spectacle{
-                float: right;
                 display: inline-block;
-                width : 50%;
+                width : 48%;
                 margin: 0;
                 line-height: 25px;
+                text-align: center;
             }
             
             .spectacle h1{
@@ -41,15 +41,15 @@
             }
             .user{
                 width: 100%;
-                display: inline-block;
-                text-align: center;
             }
 
             .nom{
                 font-weight: bold;
+                text-align: center;
             }
             .formation{
                 font-size: 12px;
+                text-align: center;
             }
             .categorie{
                 font-size: 10px;
@@ -57,6 +57,7 @@
                 background-color: {{firstCat.color}};
                 padding : 10px;
                 font-weight: bold;
+                text-align: center;
             }
             div.categorie:nth-child(3){
                 position: absolute;
@@ -66,7 +67,7 @@
             }
             .logo-fabop{
                 width : 50px;
-                float: left;
+                display: block;
                 margin-left: 15px;
             }
         </style>
@@ -75,7 +76,7 @@
         <div class="categorie">{{firstCat.nom}}</div>
         <div>
             <div class="imageSpectacle">
-                <img src="{{ asset('Images/'~modelBadge.file)}}">
+                <img src="./Images/{{modelBadge.file}}">
             </div>
             <div class="spectacle">
                 <h1>AIDA</h1>
@@ -100,12 +101,11 @@
                         {% endfor %}
                     {% endif %}
                 {% endif %}
-                <img class="logo-fabop" src="{{ asset('Images/logo-fabop.jpg')}}">
+                <img class="logo-fabop" src="./Images/logo-fabop.jpg">
 
             </div>
         </div>
         <div class="categorie">{{firstCat.nom}}</div>
-
     </body>
 
 </html>

@@ -19,6 +19,8 @@ class CRUDController extends BaseController
      */
     public function batchActionMerge(ProxyQueryInterface $selectedModelQuery, Request $request = null)
     {
+        
+        $this->validateCsrfToken('sonata.batch');
         $this->admin->checkAccess('edit');
         $this->admin->checkAccess('delete');
 

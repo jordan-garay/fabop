@@ -16,13 +16,13 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class UserAdmin extends SonataUserAdmin {
     
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection
-            ->remove('create')
-            ;
-
-    }
+//    protected function configureRoutes(RouteCollection $collection)
+//    {
+//        $collection
+//            ->remove('create')
+//            ;
+//
+//    }
 
     /**
      * @param DatagridMapper $datagridMapper
@@ -52,14 +52,11 @@ class UserAdmin extends SonataUserAdmin {
         $listMapper
                 ->add('firstname')
                 ->add('lastname')
-                ->add('username')
                 ->add('email')
                 ->add('phone')
                 ->add('location', LocationType::class)
                 ->add('enabled')
                 ->add('roles')
-                ->add('dateOfBirth')
-                ->add('gender')
                 ->add('newsletter')
                 ->add('institutions')
                 ->add('participations', 'collection')
@@ -165,7 +162,7 @@ class UserAdmin extends SonataUserAdmin {
         ) {
             $actions['Merge'] = array(
                 'ask_confirmation' => false,
-                'label' => 'Merge'
+                'label' => 'Badge'
             );
         }
 

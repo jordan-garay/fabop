@@ -32,24 +32,27 @@ class UserAdminController extends CRUDController {
         try {
             
             $html = null;
+            $separation = "<br>";
+            $dompdf = new Dompdf();
+            $dompdf->set_option('isHtml5ParserEnabled', true);
             
             foreach ($selectedModels as $selectedModel) {
                 //$modelManager->delete($selectedModel);
                 // instantiate and use the dompdf class
-                $dompdf = new Dompdf();
+                
 
                 $message = 'yop';
 
-                $html = $html . $this->render('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel));
-
+                        $html = $html . $this->renderView('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel)) . $separation;
+                //$dompdf->load_html($this->renderView('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel)));
                 /** Pour debbugage de template */
-                return $html = $this->render('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel));
+                //return $html = $this->render('UserBundle:Default:test.html.twig', array('modelBadge' => $modelBadge, 'user' => $selectedModel));
             }
-
             $dompdf->loadHtml($html);
-
+            
+            
             // (Optional) Setup the paper size and orientation
-            $dompdf->setPaper('A4', 'landscape');
+//            $dompdf->setPaper('A4', 'landscape');
 
             // Render the HTML as PDF
             $dompdf->render();

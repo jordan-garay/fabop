@@ -18,6 +18,16 @@ use Doctrine\Common\Collections\ArrayCollection;
  *          column=@ORM\Column(
  *              nullable = true
  *          )
+ *      ),
+ *      @ORM\AttributeOverride(name="email",
+ *          column=@ORM\Column(
+ *              unique = false
+ *          )
+ *      ),
+ *      @ORM\AttributeOverride(name="emailCanonical",
+ *          column=@ORM\Column(
+ *              unique = false
+ *          )
  *      )
  * })
  */

@@ -8,5 +8,7 @@ services:
     pao.admin.badge:
         class: PAOBundle\Admin\BadgeAdmin
         arguments: [~, PAOBundle\Entity\Badge, PAOBundle:BadgeAdmin]
+        calls:
+            - [ setTemplate, [edit, PAOBundle::base_edit.html.twig]]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Badge }

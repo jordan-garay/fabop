@@ -43,6 +43,7 @@ class AppKernel extends Kernel
             new CategoryBundle\CategoryBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new PAOBundle\PAOBundle(),
+            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

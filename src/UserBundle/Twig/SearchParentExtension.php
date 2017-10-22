@@ -14,8 +14,12 @@ class SearchParentExtension extends \Twig_Extension {
 
     public function searchParentFunction($arguments) {
         $parent = $arguments->getParent();
-        while ($parent->getParent()) {
-            $parent = $parent->getParent();
+        if ($parent) {
+            while ($parent->getParent()) {
+                $parent = $parent->getParent();
+            }
+        }else{
+            $parent = $arguments;
         }
         return $parent;
     }
